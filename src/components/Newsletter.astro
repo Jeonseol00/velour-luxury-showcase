@@ -1,0 +1,67 @@
+---
+---
+
+<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
+  <div class="newsletter__bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="newsletter__inner reveal-on-scroll">
+      <span class="newsletter__label">Inner Circle</span>
+      <h2 class="newsletter__title">Receive the art of scent, curated for you</h2>
+      <p class="newsletter__desc">
+        Early access to limited editions. Behind-the-scenes from our atelier.
+        The stories behind each molecule. No noise — only signal.
+      </p>
+
+      <div id="newsletter-form-wrap">
+        <form class="newsletter__form" id="newsletter-form" novalidate>
+          <input
+            type="email"
+            class="newsletter__input"
+            id="newsletter-email"
+            placeholder="Your email address"
+            aria-label="Email address"
+            required
+          />
+          <button type="submit" class="newsletter__btn" id="newsletter-submit">
+            Join
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('newsletter-form');
+  const wrap = document.getElementById('newsletter-form-wrap');
+  const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!emailInput?.value || !emailInput.value.includes('@')) {
+      emailInput?.style.setProperty('border-color', 'hsl(0, 65%, 55%)');
+      setTimeout(() => emailInput?.style.removeProperty('border-color'), 2000);
+      return;
+    }
+
+    // Show success state
+    if (wrap) {
+      wrap.innerHTML = `
+        <div class="newsletter__success">
+          <div class="newsletter__success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" style="stroke-dasharray: 24; stroke-dashoffset: 0; animation: drawCheck 0.6s ease forwards;" />
+            </svg>
+          </div>
+          <p style="font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-text-primary);">
+            Welcome to the Inner Circle
+          </p>
+          <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">
+            Your first dispatch arrives soon.
+          </p>
+        </div>
+      `;
+    }
+  });
+</script>

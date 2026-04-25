@@ -1,0 +1,37 @@
+---
+import { PRODUCTS } from '../lib/constants';
+---
+
+<section class="collection" id="collection" aria-label="Signature collection">
+  <div class="container">
+    <div class="collection__header reveal-on-scroll">
+      <span class="collection__label">The Trilogy</span>
+      <h2 class="collection__title">Signature Collection</h2>
+    </div>
+
+    <div class="collection__grid">
+      {PRODUCTS.map((product, i) => (
+        <article class={`product-card reveal-on-scroll stagger-${i + 1}`} id={`product-${product.id}`}>
+          <div class="product-card__image-wrap">
+            <img
+              src={product.image}
+              alt={`${product.name} — ${product.family} perfume by VELOUR`}
+              loading="lazy"
+              width="400"
+              height="533"
+            />
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__family">{product.family}</span>
+            <h3 class="product-card__name">{product.name}</h3>
+            <p class="product-card__desc">{product.description}</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">{product.price}</span>
+              <button class="product-card__btn" aria-label={`Explore ${product.name}`}>Explore</button>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

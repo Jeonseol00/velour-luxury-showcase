@@ -1,0 +1,22 @@
+---
+import HeroScene from './HeroScene.jsx';
+---
+
+<section class="hero" id="hero" aria-label="Hero section">
+  <!-- 3D Canvas (React Island) -->
+  <div class="hero__canvas-wrap">
+    <HeroScene client:load />
+  </div>
+
+  <!-- Overlay Content -->
+  <div class="hero__content">
+    <h1 class="hero__brand">Velour</h1>
+    <p class="hero__tagline">Where memory meets molecule</p>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero__scroll-indicator" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="hero__scroll-arrow"></div>
+  </div>
+</section>

@@ -1,0 +1,322 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CinematicScene from '../components/CinematicScene.jsx';
+import CinematicPreloader from '../components/CinematicPreloader.jsx';
+import OlfactoryOracle from '../components/OlfactoryOracle.jsx';
+import { PRODUCTS, TESTIMONIALS } from '../lib/constants';
+
+const starSvg = `<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+const allTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
+---
+
+<Layout title="VELOUR — Where Memory Meets Molecule | Luxury Niche Perfumery">
+
+  <!-- ═══ SCROLL PROGRESS BAR ═══ -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ═══ FIXED FULL-VIEWPORT 3D CANVAS ═══ -->
+  <div class="cinema-canvas" id="cinema-canvas">
+    <CinematicScene client:load />
+  </div>
+
+  <!-- ═══ CINEMATIC PRELOADER OVERLAY ═══ -->
+  <CinematicPreloader client:load />
+
+  <!-- ═══ CUSTOM CURSOR ═══ -->
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="nav" id="navbar">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo">Velour</a>
+      <div class="nav__links" id="nav-links">
+        <a href="#story" class="nav__link">Story</a>
+        <a href="#collection" class="nav__link">Collection</a>
+        <a href="#craft" class="nav__link">The Craft</a>
+        <a href="#oracle" class="nav__link">Oracle</a>
+        <button class="nav__cta" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Discover</button>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ═══ SCROLLABLE HTML OVERLAY ═══ -->
+  <main class="scroll-overlay" id="main-content">
+
+    <!-- SECTION 1: HERO -->
+    <section class="s-hero" id="hero">
+      <div class="s-hero__content">
+        <div class="s-hero__label anim-fade" data-delay="0">Maison de Parfum</div>
+        <h1 class="s-hero__title">
+          <span class="split-char anim-char" data-delay="1">V</span><span class="split-char anim-char" data-delay="2">E</span><span class="split-char anim-char" data-delay="3">L</span><span class="split-char anim-char" data-delay="4">O</span><span class="split-char anim-char" data-delay="5">U</span><span class="split-char anim-char" data-delay="6">R</span>
+        </h1>
+        <p class="s-hero__tagline anim-fade" data-delay="8">Where memory meets molecule</p>
+      </div>
+      <div class="s-hero__scroll-cue anim-fade" data-delay="10">
+        <span>Scroll to explore</span>
+        <div class="s-hero__arrow"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STORY -->
+    <section class="s-panel s-story" id="story">
+      <div class="s-panel__inner container">
+        <div class="s-panel__content glass-card reveal">
+          <span class="label-gold">Our Origin</span>
+          <h2 class="s-panel__heading">Born from the silence between seasons</h2>
+          <div class="gold-line"></div>
+          <p>VELOUR was not founded — it was <em>summoned</em>. In a stone atelier on the outskirts of Grasse, our master perfumer spent eleven years in solitude, deconstructing the invisible architecture of memory.</p>
+          <p>Each fragrance in our collection is not merely a scent — it is a cartography of feeling, a map drawn in molecules. We source our ingredients from the margins of the known world.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COLLECTION -->
+    <section class="s-panel s-collection" id="collection">
+      <div class="container">
+        <div class="text-center reveal">
+          <span class="label-gold">The Trilogy</span>
+          <h2 class="section-title">Signature Collection</h2>
+        </div>
+        <div class="card-grid">
+          {PRODUCTS.map((p, i) => (
+            <article class={`p-card glass-card reveal`} style={`--delay: ${i * 0.15}s`}>
+              <div class="p-card__img">
+                <img src={p.image} alt={`${p.name} by VELOUR`} loading="lazy" width="400" height="533" />
+              </div>
+              <div class="p-card__body">
+                <span class="label-gold">{p.family}</span>
+                <h3 class="p-card__name">{p.name}</h3>
+                <p class="p-card__desc">{p.description}</p>
+                <div class="p-card__foot">
+                  <span class="p-card__price">{p.price}</span>
+                  <button class="btn-outline">Explore</button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: SCENT ANATOMY -->
+    <section class="s-panel s-craft" id="craft">
+      <div class="container">
+        <div class="s-craft__grid">
+          <div class="reveal">
+            <span class="label-gold">The Craft</span>
+            <h2 class="section-title" style="text-align:left">The Architecture of Fragrance</h2>
+            <p class="body-text">Every VELOUR composition unfolds in three acts across your skin. The opening — bright and arresting. The heart — complex and intimate. The base — deep, lingering, the part people remember.</p>
+          </div>
+          <div class="pyramid reveal">
+            <div class="pyramid__layer glass-card" style="--w:55%">
+              <h3 class="pyramid__title">Top Notes</h3>
+              <span class="pyramid__time">First 15 minutes</span>
+              <div class="pill-row">
+                <span class="pill">Bergamot</span><span class="pill">Pink Pepper</span><span class="pill">Yuzu</span><span class="pill">Saffron</span>
+              </div>
+            </div>
+            <div class="pyramid__layer glass-card" style="--w:75%">
+              <h3 class="pyramid__title">Heart Notes</h3>
+              <span class="pyramid__time">1 — 4 hours</span>
+              <div class="pill-row">
+                <span class="pill">Rose Absolute</span><span class="pill">Iris</span><span class="pill">Jasmine</span><span class="pill">Oud</span>
+              </div>
+            </div>
+            <div class="pyramid__layer glass-card" style="--w:95%">
+              <h3 class="pyramid__title">Base Notes</h3>
+              <span class="pyramid__time">4 — 12 hours</span>
+              <div class="pill-row">
+                <span class="pill">Amber</span><span class="pill">Sandalwood</span><span class="pill">Vanilla</span><span class="pill">Musk</span><span class="pill">Vetiver</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ORACLE -->
+    <section class="s-panel s-oracle" id="oracle">
+      <div class="container">
+        <div class="text-center reveal">
+          <span class="label-gold">The Oracle</span>
+          <h2 class="section-title">Your Scent, Decoded</h2>
+          <p class="body-text" style="max-width:50ch;margin-inline:auto">Answer five questions. Let our Olfactory Oracle reveal the fragrance written in your DNA.</p>
+        </div>
+        <OlfactoryOracle client:visible />
+      </div>
+    </section>
+
+    <!-- SECTION 6: TESTIMONIALS -->
+    <section class="s-panel s-testimonials" id="testimonials">
+      <div class="container">
+        <div class="text-center reveal">
+          <span class="label-gold">Voices</span>
+          <h2 class="section-title">The Verdict</h2>
+        </div>
+      </div>
+      <div class="marquee">
+        <div class="marquee__track">
+          {allTestimonials.map((t) => (
+            <div class="t-card glass-card">
+              <div class="t-card__stars" set:html={Array(t.stars).fill(starSvg).join('')} />
+              <p class="t-card__text">"{t.text}"</p>
+              <p class="t-card__author">{t.author}</p>
+              <p class="t-card__role">{t.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: NEWSLETTER -->
+    <section class="s-panel s-newsletter" id="newsletter">
+      <div class="container">
+        <div class="s-newsletter__inner glass-card reveal">
+          <span class="label-gold">Inner Circle</span>
+          <h2 class="section-title">Receive the art of scent</h2>
+          <p class="body-text" style="margin-inline:auto">Early access. Behind-the-scenes. The stories behind each molecule.</p>
+          <div id="nl-wrap">
+            <form class="nl-form" id="nl-form" novalidate>
+              <input type="email" class="nl-input" id="nl-email" placeholder="Your email address" required />
+              <button type="submit" class="btn-gold">Join</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="s-footer">
+      <div class="container s-footer__inner">
+        <span class="nav__logo">Velour</span>
+        <div class="s-footer__links">
+          <a href="#story">Story</a><a href="#collection">Collection</a><a href="#oracle">Oracle</a><a href="#">Contact</a>
+        </div>
+        <p class="s-footer__copy">&copy; 2026 VELOUR. All rights reserved. Crafted with obsession.</p>
+      </div>
+    </footer>
+
+  </main>
+</Layout>
+
+<script>
+  import { isEngineReady } from '../store/synesthesiaStore';
+
+  // ═══ PHASE 3: Lock scroll until engine awakening is complete ═══
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+
+  // Hide hero content initially (before staggered reveal)
+  const heroContent = document.querySelector('.s-hero__content');
+  const heroScrollCue = document.querySelector('.s-hero__scroll-cue');
+  const navbar = document.getElementById('navbar');
+  if (heroContent) heroContent.style.opacity = '0';
+  if (heroScrollCue) heroScrollCue.style.opacity = '0';
+  if (navbar) navbar.style.opacity = '0';
+
+  // Subscribe to engine readiness and trigger the staggered UI reveal
+  const unsubscribe = isEngineReady.subscribe((ready) => {
+    if (!ready) return;
+    unsubscribe();
+
+    // Wait for the golden flash to peak and begin fading (~800ms after ready)
+    // This ensures the 3D scene is revealed BEHIND the flash, not before
+    setTimeout(() => {
+      // Unlock scroll
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+
+      // Fade in navbar with subtle delay
+      if (navbar) {
+        navbar.style.transition = 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+        navbar.style.opacity = '1';
+      }
+
+      // Trigger heroZoomSettle (blur-to-sharp + scale settle)
+      if (heroContent) {
+        heroContent.style.opacity = '1';
+        heroContent.classList.add('hero-revealed');
+      }
+
+      // Staggered character reveal for "V E L O U R" — each from heavy blur to sharp
+      setTimeout(() => {
+        document.querySelectorAll('.anim-char, .anim-fade').forEach(el => {
+          const d = parseInt(el.dataset.delay || '0') * 0.12;
+          el.style.animationDelay = `${0.1 + d}s`;
+          el.classList.add('anim-active');
+        });
+      }, 200);
+
+      // Show scroll cue after text animation fully completes
+      setTimeout(() => {
+        if (heroScrollCue) {
+          heroScrollCue.style.transition = 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
+          heroScrollCue.style.opacity = '1';
+        }
+      }, 1600);
+
+    }, 800);
+  });
+
+  // ═══ Standard Page Interactions ═══
+
+  // Scroll progress bar
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar && max > 0) bar.style.transform = `scaleX(${window.scrollY / max})`;
+  }, { passive: true });
+
+  // Navbar scroll state
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Mobile burger
+  const burger = document.getElementById('burger');
+  const links = document.getElementById('nav-links');
+  burger?.addEventListener('click', () => links?.classList.toggle('open'));
+
+  // Smooth nav links
+  document.querySelectorAll('.nav__link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      t?.scrollIntoView({ behavior: 'smooth' });
+      links?.classList.remove('open');
+    });
+  });
+
+  // Custom cursor
+  const glow = document.getElementById('cursor-glow');
+  if (window.matchMedia('(pointer: fine)').matches && glow) {
+    document.addEventListener('mousemove', e => {
+      glow.style.transform = `translate(${e.clientX - 150}px, ${e.clientY - 150}px)`;
+    });
+    glow.style.opacity = '1';
+  }
+
+  // Intersection Observer for reveals
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Newsletter
+  const nlForm = document.getElementById('nl-form');
+  const nlWrap = document.getElementById('nl-wrap');
+  const nlEmail = document.getElementById('nl-email');
+  nlForm?.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!nlEmail?.value?.includes('@')) {
+      nlEmail.style.borderColor = 'hsl(0,65%,55%)';
+      setTimeout(() => nlEmail.style.removeProperty('border-color'), 2000);
+      return;
+    }
+    if (nlWrap) nlWrap.innerHTML = `<div class="nl-success"><div class="nl-check">✓</div><p style="font-family:var(--font-display);font-size:var(--text-xl);color:var(--color-text-primary)">Welcome to the Inner Circle</p></div>`;
+  });
+</script>

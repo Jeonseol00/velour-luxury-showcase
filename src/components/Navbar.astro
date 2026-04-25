@@ -1,0 +1,61 @@
+---
+---
+
+<nav class="navbar" id="navbar" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="#" class="navbar__logo" aria-label="VELOUR Home">Velour</a>
+
+    <div class="navbar__links" id="nav-links" role="menubar">
+      <a href="#story" class="navbar__link" role="menuitem">Story</a>
+      <a href="#collection" class="navbar__link" role="menuitem">Collection</a>
+      <a href="#anatomy" class="navbar__link" role="menuitem">The Craft</a>
+      <a href="#oracle" class="navbar__link" role="menuitem">Oracle</a>
+      <button class="navbar__cta" id="nav-cta">Discover</button>
+    </div>
+
+    <button class="navbar__mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const navLinks = document.getElementById('nav-links');
+
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    if (currentScroll > 50) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+  }, { passive: true });
+
+  // Mobile toggle
+  mobileToggle?.addEventListener('click', () => {
+    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!expanded));
+    navLinks?.classList.toggle('open');
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('.navbar__link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = (e.currentTarget as HTMLAnchorElement).getAttribute('href');
+      if (href) {
+        const target = document.querySelector(href);
+        target?.scrollIntoView({ behavior: 'smooth' });
+        navLinks?.classList.remove('open');
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
