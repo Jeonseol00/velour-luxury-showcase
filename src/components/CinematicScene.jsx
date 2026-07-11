@@ -205,14 +205,12 @@ function CameraRig() {
     const t = scrollRef.current;
     const time = state.clock.getElapsedTime();
 
-    // Clamp delta to prevent tab-switch time jumps from breaking the intro
-    const safeDelta = Math.min(delta, 0.05);
-
     // ── CINEMATIC RUSH: 3-phase sigmoid camera approach (3.2 seconds) ──
     const INTRO_DURATION = 3.2;
     if (introPhaseRef.current < 1) {
-      introTimeRef.current += safeDelta;
-      const progress = Math.min(introTimeRef.current / INTRO_DURATION, 1);
+      // Use absolute elapsed time to guarantee synchronization with the 2-second HTML preloader.
+      // Accumulating clamped deltas causes desync if the browser has startup lag (e.g., Brave Shields).
+      const progress = Math.min(time / INTRO_DURATION, 1);
 
       // ── Sigmoid S-Curve: slow → FAST → slow ──
       // Maps linear 0→1 into an S-curve with dramatic midpoint acceleration
@@ -626,13 +624,22 @@ function GoldenDust() {
 
 /* ── Fallback ── */
 function Fallback() {
+  useEffect(() => {
+    // If WebGL fails or is blocked by strict tracking protection (e.g. Brave Shields),
+    // we must signal readiness anyway so the user isn't permanently locked out of the site.
+    const t = setTimeout(() => {
+      isEngineReady.set(true);
+    }, 2000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div style={{
       width: '100%', height: '100%',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: 'radial-gradient(circle at center 30%, #0a030d 0%, #000000 100%)'
     }}>
-      <p style={{ color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>INITIALIZING ENGINE...</p>
+      <p style={{ color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>HTML FALLBACK ACTIVE</p>
     </div>
   );
 }
